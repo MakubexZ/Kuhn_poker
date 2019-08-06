@@ -49,6 +49,7 @@ class CounterfactualRegretMinimizationBase:
         raise NotImplementedError("Please implement run method")
 
     def value_of_the_game(self):
+        # print(self.__value_of_the_game_state_recursive(self.root))
         return self.__value_of_the_game_state_recursive(self.root)
 
     def _cfr_utility_recursive(self, state, reach_a, reach_b):
@@ -174,6 +175,8 @@ class CounterfactualRegretMinimizationBase:
             return node.evaluation()
         for action in node.actions:
             value += self.nash_equilibrium[node.inf_set()][action] * self.__value_of_the_game_state_recursive(node.play(action))
+        if node.is_chance():
+            print('value of player 1 for whole tree', value)
         return value
 
 
